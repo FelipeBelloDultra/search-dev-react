@@ -1,3 +1,1 @@
-import SearchDev from './SearchDev';
-
-export default SearchDev;
+export { default } from './SearchDev';

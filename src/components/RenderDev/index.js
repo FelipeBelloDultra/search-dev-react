@@ -1,3 +1,1 @@
-import RenderDev from './RenderDev';
-
-export default RenderDev;
+export { default } from './RenderDev';

@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import RenderDev from './components/RenderDev';
 import SearchDev from './components/SearchDev';
-
-import './App.css';
+import ErrorInfo from './components/ErrorInfo';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -21,13 +20,15 @@ const App = () => {
 
         const apiUserRepos = await axios.get(`https://api.github.com/users/${user}/repos`);
         await setUserGitHubRepos(apiUserRepos.data);
-        setNamePlaceHolderUser('Informe o usuário do GitHub...');
+
+        setNamePlaceHolderUser(`${user}, informe outro usuário...`);
       } else {
-        setNamePlaceHolderUser('Favor informar um usuário...');
+        setNamePlaceHolderUser('Favor, informar um usuário do GitHub...');
       };
       setInfoError(null);
     } catch (error) {
-      setInfoError(`O usuário "${user}" não existe, verifíque se foi escrito de forma correta!`);
+      console.log(error.response);
+      setInfoError(`Usuário "${user}" não existe / Erro na requisição!`);
       setUserGitHub([]);
       setUserGitHubRepos([]);
     };
@@ -39,11 +40,20 @@ const App = () => {
 
   return (
     <div>
-      <SearchDev loadDev={loadDev} changeDev={changeDev} namePlaceHolderUser={namePlaceHolderUser} />
-      <h1>{infoError}</h1>
-      <RenderDev userGitHub={userGitHub} userGitHubRepos={userGitHubRepos} />
+      <SearchDev
+        loadDev={loadDev}
+        changeDev={changeDev}
+        namePlaceHolderUser={namePlaceHolderUser}
+      />
+      <ErrorInfo
+        error={infoError}
+      />
+      <RenderDev
+        userGitHub={userGitHub}
+        userGitHubRepos={userGitHubRepos}
+      />
     </div>
   );
-}
+};
 
 export default App;

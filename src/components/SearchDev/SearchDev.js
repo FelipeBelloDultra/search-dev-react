@@ -3,11 +3,10 @@ import React from 'react';
 import './style.css';
 
 const SearchDev = (props) => {
-
   return (
     <div>
       <header className="header">
-        <div className="container">
+        <div className="header-container">
           <h3>Pesquisar por Desenvolvedor</h3>
           <input placeholder={props.namePlaceHolderUser} onChange={props.changeDev} />
           <button onClick={props.loadDev}>Buscar Dev</button>
